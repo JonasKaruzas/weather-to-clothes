@@ -18,10 +18,45 @@ async function getWeather(location) {
   return response.json();
 }
 
+function getWeatherElements(weatherArr) {
+  function drawDay(day) {
+    const card = document.createElement("div");
+    const dayName = document.createElement("div");
+    const maxTemp = document.createElement("div");
+    const minTemp = document.createElement("div");
+    const condition = document.createElement("div");
+    const conditionIcon = document.createElement("img");
+
+    dayName.innerText = day.day;
+    maxTemp.innerText = day.max_temp.c;
+    minTemp.innerText = day.min_temp.c;
+    condition.innerText = day.comment;
+    conditionIcon.src = day.iconURL;
+
+    card.append(dayName, maxTemp, minTemp, condition, conditionIcon);
+    return card;
+  }
+
+  let result = "";
+
+  weatherArr.forEach((day) => {
+    // console.log(day);
+    result += drawDay(day);
+  });
+
+  console.log(result);
+  return result;
+}
+
 async function runProgram() {
   const location = await getLocation();
   const weatherObj = await getWeather(location.city);
-  console.log(weatherObj.next_days);
+
+  const WeatherElements = getWeatherElements(weatherObj.next_days);
+  const weatherOutput = document.querySelector("#weather_info_container");
+
+  weatherOutput.append(...WeatherElements);
+  // console.log(weatherObj.next_days);
 }
 
 runProgram();
