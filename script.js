@@ -37,11 +37,10 @@ function getWeatherElements(weatherArr) {
     return card;
   }
 
-  let result = "";
+  const result = [];
 
   weatherArr.forEach((day) => {
-    // console.log(day);
-    result += drawDay(day);
+    result.push(drawDay(day));
   });
 
   console.log(result);
@@ -56,7 +55,6 @@ async function runProgram() {
   const weatherOutput = document.querySelector("#weather_info_container");
 
   weatherOutput.append(...WeatherElements);
-  // console.log(weatherObj.next_days);
 }
 
 runProgram();
